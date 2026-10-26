@@ -296,6 +296,11 @@ html.motion:not(.is-stopped) .run__step.is-running .run__tick { animation: spin 
 .poster__small { grid-column: 1; grid-row: 1; max-width: 22ch; font-size: clamp(0.85rem, 2.4cqi, 1.1rem); color: var(--grey); }
 .poster__tag { position: absolute; right: clamp(1rem, 2.4vw, 2rem); bottom: clamp(1rem, 2.4vw, 2rem); font-size: var(--t-xs); color: var(--grey); text-transform: uppercase; letter-spacing: 0.04em; }
 .poster--hero { position: relative; aspect-ratio: 16 / 8; }
+.poster .gl-fallback { z-index: -1; }
+html.gl-on .poster { background-image: none; }
+/* Text over the generated field keeps its contrast with a soft scrim. */
+html.gl-on .poster::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(12 13 12 / 0.55), rgb(12 13 12 / 0) 40%, rgb(12 13 12 / 0) 55%, rgb(12 13 12 / 0.6)); pointer-events: none; }
+.poster > :not(.poster__tag):not(.gl-fallback) { position: relative; }
 @media (max-width: 767px) { .poster--hero { aspect-ratio: 4 / 5; } .poster__tag { display: none; } }
 
 /* ---------- Threads index ---------- */
@@ -417,6 +422,8 @@ html.motion:not(.is-stopped) .run__step.is-running .run__tick { animation: spin 
 .case__links { list-style: none; padding: 0; display: grid; gap: 0.35rem; }
 .case__links a { display: inline-block; padding-block: 0.15em; }
 .case__cover { margin: 0 var(--gutter); position: relative; }
+.case__cover-media { position: relative; overflow: clip; }
+.case__frame-media { position: relative; overflow: clip; }
 .case__cover-img { width: 100%; height: auto; display: block; background: var(--white); }
 .case__cover figcaption, .case__frame figcaption { margin-top: 0.8rem; font-size: var(--t-s); color: var(--c-muted); }
 .case__brief, .case__build { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: calc(var(--u) * 18) var(--gutter) calc(var(--u) * 10); }

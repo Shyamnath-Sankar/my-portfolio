@@ -46,6 +46,7 @@ export type Project = {
   links: { label: string; href: string }[];
   cover?: Media; // a real screenshot when one exists
   poster: { big: string; small: string }; // a real fact set as an image, when no screen exists
+  seed: number; // seeds the project's generative cover
   brief: { heading: string; text: string };
   steps: { name: string; text: string }[]; // the system, drawn as a three-node graph
   build: { heading: string; text: string; points: string[] };
@@ -56,6 +57,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: 'luminaiq',
+    seed: 1.7,
     title: 'LuminaIQ',
     kind: 'AI learning platform',
     year: 2026,
@@ -96,6 +98,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'hailbrowser',
+    seed: 2.9,
     title: 'HailBrowser',
     kind: 'Open-source browser agent',
     year: 2026,
@@ -138,6 +141,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'selectstar',
+    seed: 4.3,
     title: 'SelectStar',
     kind: 'Agentic database analysis',
     year: 2026,
@@ -180,6 +184,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'anyllm',
+    seed: 5.6,
     title: 'AnyLLM',
     kind: 'Cross-platform AI app',
     year: 2025,
@@ -217,6 +222,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'eduecho',
+    seed: 7.1,
     title: 'EduEcho',
     kind: 'Campus feedback system',
     year: 2025,

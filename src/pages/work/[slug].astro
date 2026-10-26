@@ -39,15 +39,17 @@ const jsonLd = {
       </dl>
     </header>
 
-    <figure class="case__cover" data-reveal="clip" data-intro data-delay="0.35" data-agent-target data-agent-label="the product">
+    <figure class="case__cover" data-agent-target data-agent-label="the product">
+      <div class="case__cover-media" data-gl={p.cover ? '' : undefined} data-gl-instant={p.cover ? '' : undefined}>
       {p.cover ? (
         <>
           <Image src={p.cover.src} alt={p.cover.alt} widths={[640, 1100, 1600, 2000]} sizes="92vw" loading="eager" fetchpriority="high" class="case__cover-img" />
-          <figcaption>{p.cover.caption}</figcaption>
         </>
       ) : (
         <Poster project={p} size="hero" />
       )}
+      </div>
+      {p.cover && <figcaption>{p.cover.caption}</figcaption>}
     </figure>
 
     <section class="case__brief" aria-labelledby="brief-h">
@@ -95,8 +97,10 @@ const jsonLd = {
     {p.media.length > 0 && (
       <section class:list={['case__media', `case__media--${p.media[0].kind}`]} aria-label="Screens">
         {p.media.map((m) => (
-          <figure class="case__frame" data-reveal="clip">
+          <figure class="case__frame">
+            <div class="case__frame-media" data-gl>
             <Image src={m.src} alt={m.alt} widths={m.kind === 'tall' ? [400, 800] : [700, 1200, 1600]} sizes={m.kind === 'tall' ? '(max-width: 767px) 80vw, 30vw' : '(max-width: 767px) 92vw, 80vw'} loading="lazy" decoding="async" />
+            </div>
             <figcaption>{m.caption}</figcaption>
           </figure>
         ))}

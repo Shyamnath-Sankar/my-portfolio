@@ -6,6 +6,7 @@ import {
   ease, isTouch, prefersReducedMotion, stopScroll, startScroll,
 } from '../engine';
 import { startAgent } from './agent';
+import { startField, setPaper } from './field';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,6 +48,7 @@ export function setupMotion() {
     },
   });
 
+  startField();
   startAgent();
 
   // ---- Chapters: the floor turns to paper while a paper block holds the middle of the screen.
@@ -57,10 +59,10 @@ export function setupMotion() {
     document.querySelectorAll<HTMLElement>('[data-chapter-block="paper"]').forEach((el) => {
       ScrollTrigger.create({
         trigger: el, start: 'top 55%', end: 'bottom 45%',
-        onToggle: (st) => html.classList.toggle('is-paper', st.isActive),
+        onToggle: (st) => { html.classList.toggle('is-paper', st.isActive); setPaper(st.isActive); },
       });
     });
-    return () => html.classList.remove('is-paper');
+    return () => { html.classList.remove('is-paper'); setPaper(false); };
   });
 
   // ---- Frame: steps aside while scrolling down, comes back solid on the way up.

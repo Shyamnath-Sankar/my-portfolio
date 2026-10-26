@@ -4,7 +4,8 @@ import type { Project } from '../data/site';
 interface Props { project: Project; size?: 'card' | 'hero' }
 const { project: p, size = 'card' } = Astro.props;
 ---
-<div class:list={['poster', `poster--${size}`]} role="img" aria-label={`${p.title}: ${p.poster.big}, ${p.poster.small}`}>
+<div class:list={['poster', `poster--${size}`]} role="img" aria-label={`${p.title}: ${p.poster.big}, ${p.poster.small}`} data-gl="procedural" data-seed={p.seed} data-colors="#0c0d0c,#1b5a42,#ff6b2c" data-gl-duration="2">
+  <span class="gl-fallback" aria-hidden="true"></span>
   <span class="poster__chip" aria-hidden="true"><span></span>verified</span>
   <span class="poster__small" aria-hidden="true">{p.poster.small}</span>
   <span class="poster__big" aria-hidden="true">{p.poster.big}</span>

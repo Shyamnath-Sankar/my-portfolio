@@ -4,6 +4,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { onPage, prefersReducedMotion, isMobile } from '../engine';
+import { pulseEnergy } from './field';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,6 +76,7 @@ function setActive(i: number) {
       a.classList.remove('is-click');
       void a.offsetWidth;
       a.classList.add('is-click');
+      pulseEnergy();
     });
   }
 }

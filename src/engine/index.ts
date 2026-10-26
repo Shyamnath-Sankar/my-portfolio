@@ -5,10 +5,12 @@
 //   enter()                after the new page is in the DOM: init → enter animation → intro
 // Project code hooks in with onPage(fn): fn runs on every page load inside a gsap.context, so the
 // tweens and ScrollTriggers it creates are reverted automatically. Return a cleanup for the rest.
+// No WebGL? Delete the five lines marked `// GL`.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initScroll, resetScroll, startScroll, stopScroll } from './scroll';
 import { initReveals } from './reveal';
+import { initGL, mountGL, unmountGL } from './gl'; // GL
 import { initCursor, initMagnetic } from './interactions';
 import { runLoader } from './loader';
 import { playEnter, playLeave } from './transition';
@@ -17,6 +19,7 @@ import { prefersReducedMotion } from './env';
 export { onScroll, scrollState, scrollToTarget, stopScroll, startScroll } from './scroll';
 export { setTransition } from './transition';
 export { setLoaderFormat, setLoaderExit } from './loader';
+export { hideGL, setBackground, clearBackground, glSupported } from './gl'; // GL
 export { ease, isTouch, isMobile, prefersReducedMotion } from './env';
 
 export type PageFn = (page: { intro: gsap.core.Timeline; path: string }) => void | (() => void);
@@ -56,6 +59,7 @@ function initPage() {
     intro = initReveals(document);
     initMagnetic(document);
   });
+  mountGL(document); // GL
   ready = true;
   pageFns.forEach(runPageFn);
   requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -68,6 +72,7 @@ export async function boot(setup?: () => void) {
   booted = true;
   syncFlags();
   initScroll();
+  initGL(); // GL
   initCursor();
   setup?.();
   stopScroll();
@@ -90,6 +95,7 @@ export function cleanup() {
   cleanups.splice(0).forEach((c) => c());
   ctx?.revert();
   ctx = null;
+  unmountGL(); // GL
 }
 
 /** Init the new page. `transition: false` for back/forward, where no leave ran. */
