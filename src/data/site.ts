@@ -69,7 +69,7 @@ export const projects: Project[] = [
       { label: 'Visit LuminaIQ', href: 'https://luminaiq.fun' },
       { label: 'Source on GitHub', href: 'https://github.com/Shyamnath-Sankar/LuminaIQ' },
     ],
-    poster: { big: 'Top 150', small: 'Global Startups, StartupGrind 2026. Picked from 10,000+ entries.' },
+    poster: { big: 'Chat. Quiz. Notes.', small: 'Any PDF becomes a study partner that answers from the page.' },
     brief: {
       heading: 'Students don’t need another document viewer.',
       text: 'They need a way to ask, test, revisit and remember. LuminaIQ turns a static PDF into a study partner: it answers from the source, quizzes you on it and keeps the notes, following the rhythm of how people actually revise.',
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     summary: 'One focused workspace for GPT, Claude, Gemini, Llama and Groq, with your own keys.',
     stack: ['Flutter', 'OpenAI-compatible APIs', 'MCP'],
     links: [],
-    poster: { big: '100+', small: 'downloads on Google Play, earning revenue within 30 days' },
+    poster: { big: 'GPT Claude Gemini Llama Groq', small: 'Five providers, one conversation, your own keys.' },
     brief: {
       heading: 'The best model for the moment should be one tap away.',
       text: 'AI moves too fast to live inside one tab or one provider. AnyLLM is a chat workspace that lets people switch models, compare points of view and bring their own keys without breaking the flow of a conversation.',
@@ -234,7 +234,7 @@ export const projects: Project[] = [
       { label: 'Live system', href: 'https://feedback.vsbec.edu.in' },
       { label: 'Source on GitHub', href: 'https://github.com/Shyamnath-Sankar/Feedback-System' },
     ],
-    poster: { big: '1 campus', small: 'live at V.S.B. Engineering College' },
+    poster: { big: 'Excel to SQL', small: 'Bulk college records become one live database of feedback.' },
     brief: {
       heading: 'Feedback only matters if it can become change.',
       text: 'EduEcho gives students a simple, structured way to say how a course is going, and gives the college one clear source of truth to act on. One operator can run it for the whole campus.',

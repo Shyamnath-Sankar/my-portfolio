@@ -1,17 +1,37 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import ProjectKnot from '../../components/ProjectKnot.astro';
+import Poster from '../../components/Poster.astro';
 import Threads from '../../components/Threads.astro';
 import { projects } from '../../data/site';
 ---
-<Base title="Projects" description="AI products by Shyamnath Sankar: LuminaIQ, HailBrowser, SelectStar, AnyLLM and EduEcho, plus smaller open-source tools and experiments.">
-  <section class="page-hero" aria-labelledby="work-title">
-    <p class="page-hero__kicker" data-reveal="fade" data-intro data-agent-park>Five case studies, one page each</p>
-    <h1 class="page-hero__title" id="work-title" data-split="chars" data-intro>Projects</h1>
-    <p class="page-hero__lede" data-split="lines" data-intro data-delay="0.2">Products that real people sign in to, download or study with. Each case study shows the problem, the system behind it and what happened.</p>
+<Base title="Projects" description="AI products by Shyamnath Sankar: LuminaIQ, HailBrowser, SelectStar, AnyLLM and EduEcho, each with its own case study, plus smaller open-source tools.">
+  <section class="page-hero" aria-labelledby="work-title" data-signal="0.2">
+    <p class="page-hero__kicker rise">Five case studies, one page each</p>
+    <h1 class="page-hero__title rise" id="work-title" style="--d: 0.05s">Projects</h1>
+    <p class="page-hero__lede rise" style="--d: 0.2s">Products that people sign in to, download or study with. Open one to see the problem, the system behind it and what happened.</p>
   </section>
-  <section class="work work--page" aria-label="Case studies">
-    {projects.map((p, i) => <ProjectKnot project={p} index={i} headingLevel="h2" />)}
+
+  <section class="pindex" aria-label="Case studies" data-signal="1">
+    <ol class="pindex__list">
+      {projects.map((p, i) => (
+        <li class="prow">
+          <span class="prow__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h2 class="prow__title"><a href={`/work/${p.slug}/`} data-stretch>{p.title}</a></h2>
+          <p class="prow__line">{p.line}</p>
+          <p class="prow__meta"><span>{p.kind}</span><span>{p.year}</span></p>
+          <div class="prow__thumb">
+            {p.cover ? (
+              <Image src={p.cover.src} alt="" widths={[360, 640]} sizes="(max-width: 767px) 92vw, 22vw" loading={i < 2 ? 'eager' : 'lazy'} />
+            ) : (
+              <Poster project={p} />
+            )}
+          </div>
+          <span class="prow__arrow arrow" aria-hidden="true">→</span>
+        </li>
+      ))}
+    </ol>
   </section>
+
   <Threads />
 </Base>

@@ -57,7 +57,7 @@ const person = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.name}: AI product builder, Chennai`} />
+    <meta property="og:image:alt" content={`${site.name}: AI product builder in Chennai`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -66,10 +66,9 @@ const person = {
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <link rel="preload" href="/fonts/anek-100_800-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/host-400_700-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/mono-400_600-normal.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
       document.documentElement.classList.add('js');
-      try { if (sessionStorage.getItem('agent-stopped') === '1') document.documentElement.classList.add('is-stopped'); } catch (e) {}
+      try { if (localStorage.getItem('motion-paused') === '1') document.documentElement.classList.add('is-stopped'); } catch (e) {}
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
     </script>
     <ClientRouter fallback="swap" />
@@ -79,19 +78,10 @@ const person = {
     <div id="gl" transition:persist="gl" aria-hidden="true"></div>
     <div id="curtain" transition:persist="curtain" aria-hidden="true">
       <div class="curtain__panel">
-        <span class="curtain__call"><span class="curtain__fn">navigate</span>(<span data-curtain-path></span>)</span>
+        <span class="curtain__kicker" data-curtain-kicker>Opening</span>
         <span class="curtain__label" data-curtain-label></span>
         <span class="curtain__bar"><span data-curtain-bar></span></span>
       </div>
-    </div>
-    <div id="agent" transition:persist="agent" aria-hidden="true">
-      <svg class="agent__cursor" viewBox="0 0 24 24"><path d="M4 2.5 20 11l-7.2 1.8L9.5 20Z" /></svg>
-      <span class="agent__tag">agent</span>
-    </div>
-    <div class="pill" transition:persist="pill" data-pill>
-      <span class="pill__dot" aria-hidden="true"></span>
-      <span class="pill__text" data-pill-text>Ready</span>
-      <button class="pill__stop" type="button" aria-pressed="false" data-stop>Stop</button>
     </div>
     {loader && <Loader />}
     {loader && <script is:inline>if (matchMedia('(max-width: 767px), (pointer: coarse)').matches) document.getElementById('loader')?.remove();</script>}

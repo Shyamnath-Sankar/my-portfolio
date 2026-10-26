@@ -1,0 +1,18 @@
+---
+import { projects } from '../data/site';
+---
+<nav class="hindex" aria-labelledby="hindex-h">
+  <p class="hindex__h" id="hindex-h">Selected projects</p>
+  <ol class="hindex__list">
+    {projects.map((p, i) => (
+      <li>
+        <a href={`/work/${p.slug}/`}>
+          <span class="hindex__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <span class="hindex__title">{p.title}</span>
+          <span class="hindex__kind">{p.kind}</span>
+          <span class="hindex__arrow arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>

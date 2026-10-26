@@ -1,5 +1,6 @@
 ---
-// One project = one step of the run: the step lane (tool calls), the text, the media.
+// One project on the home page: index number, text with live links, and the product's own UI
+// shown inside a neutral browser frame (the project's design stays separate from the portfolio's).
 import { Image } from 'astro:assets';
 import Poster from './Poster.astro';
 import type { Project } from '../data/site';
@@ -7,29 +8,37 @@ interface Props { project: Project; index: number; headingLevel?: 'h2' | 'h3' }
 const { project: p, index, headingLevel: H = 'h3' } = Astro.props;
 const no = String(index + 1).padStart(2, '0');
 const side = index % 2 === 0 ? 'left' : 'right';
-const target = p.links[0] ? new URL(p.links[0].href).host + new URL(p.links[0].href).pathname.replace(/\/$/, '') : `${p.slug}`;
+const host = (href: string) => { const u = new URL(href); return (u.host + u.pathname).replace(/\/$/, '').replace(/^www\./, ''); };
+const url = p.links[0] ? host(p.links[0].href) : `${p.title.toLowerCase()}, ${p.kind.toLowerCase()}`;
 ---
-<article class:list={['knot', `knot--${side}`]} data-knot={index} data-agent-target>
+<article class:list={['knot', `knot--${side}`]} data-knot={index} data-signal="1">
   <div class="knot__lane" aria-hidden="true">
-    <span class="knot__step">step {no}</span>
-    <code class="knot__call">open(<span>“{target}”</span>)</code>
-    <code class="knot__call">read_page()</code>
-    <code class="knot__done"><span class="knot__tick"></span>done</code>
+    <span class="knot__index">{no}</span>
+    <span class="knot__year">{p.year}</span>
   </div>
   <div class="knot__text">
-    <p class="knot__no"><span class="sr-only">Project </span>{no}</p>
+    <p class="knot__no"><span class="sr-only">Project {no}, </span>{p.kind}</p>
     <H class="knot__title"><a class="knot__link" href={`/work/${p.slug}/`} data-stretch>{p.title}</a></H>
     <p class="knot__line">{p.line}</p>
     <p class="knot__summary">{p.summary}</p>
-    <p class="knot__meta">{p.kind}, {p.year}</p>
     <span class="knot__open" aria-hidden="true">Read the case study <span class="arrow">→</span></span>
-  </div>
-  <div class="knot__media" data-agent-point data-gl={p.cover ? '' : undefined}>
-    {p.cover ? (
-      <Image src={p.cover.src} alt={p.cover.alt} widths={[560, 900, 1400]} sizes="(max-width: 767px) 92vw, 54vw" class="knot__img" loading="lazy" decoding="async" />
-    ) : (
-      <Poster project={p} />
+    {p.links.length > 0 && (
+      <ul class="knot__links">
+        {p.links.map((l) => <li><a class="knot__live" href={l.href} target="_blank" rel="noopener">{host(l.href)} <span aria-hidden="true">↗</span><span class="sr-only"> ({l.label}, opens in a new tab)</span></a></li>)}
+      </ul>
     )}
+  </div>
+  <div class="knot__media">
+    <div class="window">
+      <div class="window__bar" aria-hidden="true"><span class="window__dots"><i></i><i></i><i></i></span><span class="window__url">{url}</span></div>
+      <div class="window__view" data-gl={p.cover ? '' : undefined}>
+        {p.cover ? (
+          <Image src={p.cover.src} alt={p.cover.alt} widths={[560, 900, 1400]} sizes="(max-width: 767px) 92vw, 54vw" class="knot__img" loading="lazy" decoding="async" />
+        ) : (
+          <Poster project={p} />
+        )}
+      </div>
+    </div>
     <span class="knot__frame" aria-hidden="true"></span>
   </div>
 </article>

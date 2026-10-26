@@ -5,8 +5,7 @@ import {
   setLoaderFormat, setLoaderExit, setTransition, onPage, onScroll,
   ease, isTouch, prefersReducedMotion, stopScroll, startScroll,
 } from '../engine';
-import { startAgent } from './agent';
-import { startField, setPaper } from './field';
+import { startField, setPaper, setOrder, pulseEnergy } from './field';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +13,7 @@ export function setupMotion() {
   // ---- Loader counter: real progress, as a percentage.
   setLoaderFormat((p) => String(Math.round(p)).padStart(3, '0'));
 
-  // ---- Page transition: the agent's tool call is shown while the next page loads.
+  // ---- Page transition: a black panel rises with the destination's name and a mint progress line.
   let label = '';
   let dest = '';
   document.addEventListener('click', (e) => {
@@ -30,14 +29,14 @@ export function setupMotion() {
       const panel = c.querySelector<HTMLElement>('.curtain__panel')!;
       const bar = c.querySelector<HTMLElement>('[data-curtain-bar]')!;
       const text = c.querySelector<HTMLElement>('[data-curtain-label]')!;
-      const path = c.querySelector<HTMLElement>('[data-curtain-path]')!;
+      const kicker = c.querySelector<HTMLElement>('[data-curtain-kicker]')!;
       text.textContent = label;
-      path.textContent = `“${dest || '/'}”`;
+      kicker.textContent = dest.startsWith('/work/') && dest.length > 6 ? 'Opening project' : 'Opening';
       return gsap.timeline()
         .set(c, { autoAlpha: 1 })
         .set(bar, { scaleX: 0 })
         .fromTo(panel, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: ease.inOut })
-        .fromTo(c.querySelectorAll('.curtain__call, .curtain__label'), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: ease.soft, stagger: 0.06 }, 0.3)
+        .fromTo(c.querySelectorAll('.curtain__kicker, .curtain__label'), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: ease.soft, stagger: 0.06 }, 0.3)
         .to(bar, { scaleX: 1, duration: 0.75, ease: 'power2.inOut' }, 0.2);
     },
     enter: (c) => {
@@ -49,7 +48,39 @@ export function setupMotion() {
   });
 
   startField();
-  startAgent();
+
+  // ---- From noise to signal: each section sets how ordered the field is (data-signal 0..1).
+  onPage(() => {
+    const sections = [...document.querySelectorAll<HTMLElement>('[data-signal]')];
+    setOrder(parseFloat(sections[0]?.dataset.signal ?? '0.3'));
+    if (prefersReducedMotion()) return;
+    sections.forEach((el) => ScrollTrigger.create({
+      trigger: el, start: 'top 55%', end: 'bottom 55%',
+      onToggle: (st) => {
+        if (el.hasAttribute('data-knot')) el.classList.toggle('is-active', st.isActive);
+        if (st.isActive) { setOrder(parseFloat(el.dataset.signal || '0.5')); if (el.hasAttribute('data-knot')) pulseEnergy(); }
+      },
+    }));
+  });
+
+  // ---- Motion toggle (WCAG 2.2.2): pauses the field, the marquee and every CSS animation.
+  const syncMotion = () => {
+    const paused = document.documentElement.classList.contains('is-stopped');
+    document.querySelectorAll<HTMLButtonElement>('[data-motion-toggle]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(paused));
+      const l = b.querySelector('[data-motion-label]');
+      if (l) l.textContent = paused ? 'Motion off' : 'Motion on';
+    });
+  };
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('[data-motion-toggle]')) return;
+    const paused = !document.documentElement.classList.contains('is-stopped');
+    document.documentElement.classList.toggle('is-stopped', paused);
+    try { localStorage.setItem('motion-paused', paused ? '1' : '0'); } catch { /* private mode */ }
+    syncMotion();
+    document.dispatchEvent(new CustomEvent('motion:toggle'));
+  });
+  onPage(() => syncMotion());
 
   // ---- Velocity marquee: speeds up and reverses with scroll; Stop pauses it.
   onPage(() => {
@@ -63,8 +94,8 @@ export function setupMotion() {
       const dir = velocity < 0 ? -1 : 1;
       gsap.to(loop, { timeScale: dir * (1 + Math.min(Math.abs(velocity) / 10, 4)), duration: 0.5, overwrite: true });
     });
-    document.addEventListener('agent:stop', sync);
-    return () => { off(); document.removeEventListener('agent:stop', sync); };
+    document.addEventListener('motion:toggle', sync);
+    return () => { off(); document.removeEventListener('motion:toggle', sync); };
   });
 
   // ---- Chapters: the floor turns to paper while a paper block holds the middle of the screen.

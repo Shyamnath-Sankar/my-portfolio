@@ -2,9 +2,9 @@
 import { site } from '../data/site';
 const year = 2026;
 ---
-<footer class="foot">
+<footer class="foot" data-signal="0.15">
   <div class="foot__top">
-    <p class="foot__ask">Got a task for a real person? Hand it over.</p>
+    <p class="foot__ask">Have a messy problem? Let’s find the signal.</p>
     <a class="btn foot__cta" href={`mailto:${site.email}`} data-fill>
       <span class="btn__fill" aria-hidden="true"></span>
       <span class="btn__label">Email me</span>
@@ -13,7 +13,7 @@ const year = 2026;
   </div>
   <div class="foot__name" aria-hidden="true">
     <span>{site.first}</span>
-    <svg class="foot__cursor" viewBox="0 0 24 24"><path d="M4 2.5 20 11l-7.2 1.8L9.5 20Z" /></svg>
+    <svg class="foot__wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15c3-7 5-7 7 0s4 7 6 0 4-7 7 0" /></svg>
   </div>
   <div class="foot__grid">
     <div>
@@ -28,7 +28,7 @@ const year = 2026;
     </div>
     <div class="foot__colophon">
       <h2 class="foot__h">Colophon</h2>
-      <p>This site runs like the agents I build: one task, every step shown, and a Stop button that pauses all motion. The cursor is borrowed from HailBrowser.</p>
+      <p>The lines behind this site are a noise field. They straighten into clean signal wherever the work is, which is roughly what I do for a living. Turn them off with the Motion switch at the top.</p>
       <p>Set in Anek by Ek Type, Host Grotesk and JetBrains Mono. Built with Astro, GSAP and Lenis.</p>
     </div>
   </div>

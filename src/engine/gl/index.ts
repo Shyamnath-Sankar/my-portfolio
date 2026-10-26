@@ -187,7 +187,7 @@ export function hideGL(duration = 0.6) {
 }
 
 // Adaptive quality: if frames run slow (weak GPU, software GL), lower the canvas resolution.
-let dpr = 0, frames = 0, last = 0, slow = 0;
+let dpr = 0, frames = 0, last = 0, slow = 0, lastT = 0;
 function adapt(t: number) {
   if (!renderer) return;
   if (!dpr) dpr = renderer.dpr;
@@ -207,7 +207,10 @@ function adapt(t: number) {
 function render(t: number) {
   if (!renderer || document.hidden) return;
   adapt(t);
-  time = t;
+  // Motion paused: time stands still (planes still follow the page as it scrolls).
+  const paused = document.documentElement.classList.contains('is-stopped');
+  if (!paused) time += Math.min(t - (lastT || t), 0.1);
+  lastT = t;
   const target = Math.max(-40, Math.min(40, scrollState().velocity));
   velocity += (target - velocity) * 0.12;
   let visible = 0;

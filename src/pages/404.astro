@@ -1,16 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Page not found" description="This page does not exist. The agent tried to open it, got a 404 and stopped. Head back to the index to see the work.">
-  <section class="lost" aria-labelledby="lost-h" data-pill-page="Stopped: page not found">
-    <ol class="lost__log" aria-hidden="true" data-agent-park>
-      <li><code>navigate(<span data-lost-path>“this page”</span>)</code><span>404</span></li>
-      <li><code>read_page()</code><span>nothing here</span></li>
-      <li><code>stop()</code><span class="lost__stop">halted</span></li>
-    </ol>
-    <h1 class="lost__h" id="lost-h" data-split="lines" data-intro>The agent opened this page and found nothing.</h1>
-    <p class="lost__p" data-reveal="up" data-intro data-delay="0.2">It stopped instead of guessing, which is what a good agent does. The work is on the index.</p>
-    <a class="btn lost__btn" href="/" data-fill data-reveal="up" data-intro data-delay="0.3">
+<Base title="Page not found" description="This page does not exist. Nothing but noise here; the projects and case studies are on the index.">
+  <section class="lost" aria-labelledby="lost-h" data-signal="0">
+    <p class="lost__code rise">404</p>
+    <h1 class="lost__h rise" id="lost-h" style="--d: 0.06s">Nothing but noise here.</h1>
+    <p class="lost__p rise" style="--d: 0.18s">This page doesn’t exist. The signal is on the index.</p>
+    <a class="btn lost__btn rise" href="/" data-fill style="--d: 0.28s">
       <span class="btn__fill" aria-hidden="true"></span>
       <span class="btn__label">Back to the index</span>
       <span class="btn__arrow" aria-hidden="true">→</span>

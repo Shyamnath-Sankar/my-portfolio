@@ -1,17 +1,28 @@
-# DESIGN.md: Shyamnath Sankar, portfolio redesign (v2: "The run")
+# DESIGN.md: Shyamnath Sankar, portfolio (v3: "From noise to signal")
 
-v1 (the kolam concept) was rejected by the owner. Brief from the owner: unique, black, white,
-mint and orange.
+History: v1 (kolam) and v2 (agent-run UI borrowed from HailBrowser) were rejected by the owner.
+Owner's brief: unique, black / white / mint / orange, strong motion graphics, separate project
+pages, English only, and the portfolio's design must stay separate from the projects' own UI.
 
-## Brief
+## Concept card
 
-- **Subject:** Shyamnath Sankar. AI product builder and full-stack developer, Chennai. Co-founder,
-  Product Manager and Lead AI Developer at Genrecai. B.Tech CSBS, V.S.B. Engineering College.
-- **Audience:** founders and hiring teams who need someone to ship AI products end to end;
-  collaborators in open-source agent tooling.
-- **Job:** prove he ships real agent and retrieval systems, then get an email.
-- **Assumptions:** no portrait provided. LuminaIQ, AnyLLM and EduEcho have no fetchable
-  screenshots, so they show a real fact as a typographic panel instead of a fake screen.
+```
+Idea:        From noise to signal. A live WebGL field of contour lines (noise) that straightens
+             into parallel flowing signal lines wherever the work is.
+Anchor:      his products all turn messy inputs (PDFs, spreadsheets, databases, the open web)
+             into clear answers.
+Signature:   the field: each section sets data-signal (0 noise .. 1 signal); scroll tweens the
+             shader between them; orange pulses run along the lines; the pointer bends it.
+Motion verb: resolve. Headlines rise out of a clip; lines settle from chaos into order.
+Screenshot:  huge white name on black, a tangle of mint contours on the right, the project index.
+Projects:    each product's own UI sits inside a neutral browser frame, clearly separate from the
+             portfolio's design. Projects without screenshots get an animated generated cover
+             with a typographic line about what the product does.
+Pause:       "Motion on/off" in the header freezes the field, the marquee and CSS animation.
+```
+
+Palette, type and grid as below (v2 values kept): black #0c0d0c, white #f3f4f1, mint #8ff0c8,
+orange #ff6b2c, paper chapters with ink #0c0d0c. Anek (display, width axis) + Host Grotesk.
 
 ## Concepts
 

@@ -2,9 +2,9 @@
 // Smaller work, as an index of past runs.
 import { threads } from '../data/site';
 interface Props { heading?: string; level?: 'h2' | 'h3' }
-const { heading = 'Other runs', level: H = 'h2' } = Astro.props;
+const { heading = 'Other projects', level: H = 'h2' } = Astro.props;
 ---
-<section class="threads" aria-labelledby="threads-h">
+<section class="threads" aria-labelledby="threads-h" data-signal="0.7">
   <div class="threads__head">
     <H class="threads__h" id="threads-h" data-split="lines">{heading}</H>
     <p class="threads__intro">Smaller tools and experiments, all open on GitHub. Some became products; one was retired so SelectStar could exist.</p>

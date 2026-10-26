@@ -23,13 +23,12 @@ const jsonLd = {
 };
 ---
 <Base title={`${p.title}, ${p.kind}`} description={`${p.summary} A case study by ${site.name}: the problem, the system and the outcome.`} jsonLd={jsonLd}>
-  <article class="case" data-case={p.slug} data-pill-page={`Reading ${p.title}`}>
-    <header class="case__hero">
-      <p class="case__kicker" data-reveal="fade" data-intro><span>{no}</span><span>{p.kind}</span><span>{p.year}</span></p>
-      <p class="case__status" data-reveal="fade" data-intro data-delay="0.4" aria-hidden="true" data-agent-park><span class="pill__dot"></span>step {no} of {projects.length}, done</p>
-      <h1 class="case__title" data-split="chars" data-intro>{p.title}</h1>
-      <p class="case__line" data-split="lines" data-intro data-delay="0.15">{p.line}</p>
-      <dl class="case__meta" data-reveal="up" data-intro data-delay="0.3">
+  <article class="case" data-case={p.slug}>
+    <header class="case__hero" data-signal="0.15">
+      <p class="case__kicker rise"><span>Project {no} of {projects.length}</span><span>{p.kind}</span><span>{p.year}</span></p>
+      <h1 class="case__title rise" style="--d: 0.05s">{p.title}</h1>
+      <p class="case__line rise" style="--d: 0.18s">{p.line}</p>
+      <dl class="case__meta rise" style="--d: 0.3s">
         <div><dt>Role</dt><dd>{p.role}</dd></div>
         <div><dt>Year</dt><dd>{p.year}</dd></div>
         <div><dt>Stack</dt><dd>{p.stack.join(', ')}</dd></div>
@@ -39,7 +38,8 @@ const jsonLd = {
       </dl>
     </header>
 
-    <figure class="case__cover" data-agent-target data-agent-label="the product">
+    <figure class="case__cover rise" style="--d: 0.4s">
+      {p.cover && <div class="window__bar window__bar--case" aria-hidden="true"><span class="window__dots"><i></i><i></i><i></i></span><span class="window__url">{p.links[0] ? p.links[0].href.replace(/^https?:\/\/(www\.)?/, '') : p.slug}</span></div>}
       <div class="case__cover-media" data-gl={p.cover ? '' : undefined} data-gl-instant={p.cover ? '' : undefined}>
       {p.cover ? (
         <>
@@ -52,7 +52,7 @@ const jsonLd = {
       {p.cover && <figcaption>{p.cover.caption}</figcaption>}
     </figure>
 
-    <section class="case__brief" aria-labelledby="brief-h">
+    <section class="case__brief" aria-labelledby="brief-h" data-signal="0.4">
       <p class="case__label">The brief</p>
       <div>
         <h2 class="case__h" id="brief-h" data-split="lines">{p.brief.heading}</h2>
@@ -60,7 +60,7 @@ const jsonLd = {
       </div>
     </section>
 
-    <section class="system" aria-labelledby="system-h" data-system data-chapter-block="paper">
+    <section class="system" aria-labelledby="system-h" data-system data-chapter-block="paper" data-signal="1">
       <div class="system__stage">
         <p class="case__label" id="system-h">The system</p>
         <svg class="system__graph" viewBox="0 0 300 120" role="img" aria-label={`The system as three connected steps: ${p.steps.map((s) => s.name).join(', ')}`}>
@@ -76,8 +76,8 @@ const jsonLd = {
       </div>
       <ol class="system__steps">
         {p.steps.map((s, i) => (
-          <li class="system__step" data-step={i} data-agent-target data-agent-label={`step ${i + 1}, ${s.name}`}>
-            <span class="system__no" data-agent-point>{String(i + 1).padStart(2, '0')}</span>
+          <li class="system__step" data-step={i}>
+            <span class="system__no">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="system__name">{s.name}</h3>
             <p>{s.text}</p>
           </li>
@@ -85,7 +85,7 @@ const jsonLd = {
       </ol>
     </section>
 
-    <section class="case__build" aria-labelledby="build-h">
+    <section class="case__build" aria-labelledby="build-h" data-signal="0.6">
       <p class="case__label">The build</p>
       <div>
         <h2 class="case__h" id="build-h" data-split="lines">{p.build.heading}</h2>
@@ -107,19 +107,19 @@ const jsonLd = {
       </section>
     )}
 
-    <section class="outcome" aria-labelledby="outcome-h" data-agent-target data-agent-label="the outcome">
-      <p class="case__label" data-agent-point>The outcome</p>
+    <section class="outcome" aria-labelledby="outcome-h" data-signal="1">
+      <p class="case__label">The outcome</p>
       <h2 class="outcome__value" id="outcome-h" data-split="chars">{p.outcome.value}<span class="sr-only">: {p.outcome.label}</span></h2>
       <p class="outcome__label" aria-hidden="true">{p.outcome.label}</p>
       <p class="case__text outcome__text" data-reveal="up">{p.outcome.text}</p>
     </section>
 
-    <nav class="next" aria-label="Next case study" data-agent-target data-agent-label={`next, ${next.title}`}>
+    <nav class="next" aria-label="Next case study" data-signal="0.3">
       <a href={`/work/${next.slug}/`} class="next__link" data-stretch>
-        <span class="next__label" data-agent-point>Next case study <span class="arrow" aria-hidden="true">→</span></span>
+        <span class="next__label">Next case study <span class="arrow" aria-hidden="true">→</span></span>
         <span class="next__title">{next.title}</span>
       </a>
-      <code class="next__call" aria-hidden="true">open(“/work/{next.slug}/”)</code>
+      <span class="next__kind">{next.kind}, {next.year}</span>
       <span class="next__line">{next.line}</span>
     </nav>
   </article>

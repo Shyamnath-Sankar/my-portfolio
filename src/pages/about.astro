@@ -3,21 +3,21 @@ import Base from '../layouts/Base.astro';
 import { facts, timeline, skills } from '../data/site';
 ---
 <Base title="About" description="Shyamnath Sankar is a co-founder of Genrecai and a Computer Science & Business Systems student in Chennai who builds AI products from idea to daily use.">
-  <section class="page-hero" aria-labelledby="about-title" data-pill-page="Reading about">
-    <p class="page-hero__kicker" data-reveal="fade" data-intro data-agent-park>About</p>
-    <h1 class="page-hero__title page-hero__title--long" id="about-title" data-split="words" data-intro>From the first messy idea to the day someone depends on it.</h1>
+  <section class="page-hero" aria-labelledby="about-title" data-signal="0.1">
+    <p class="page-hero__kicker rise">About</p>
+    <h1 class="page-hero__title page-hero__title--long rise" id="about-title" style="--d: 0.06s">From the first messy idea to the day someone depends on it.</h1>
   </section>
 
-  <section class="bio" aria-labelledby="bio-h">
+  <section class="bio" aria-labelledby="bio-h" data-signal="0.35">
     <h2 class="sr-only" id="bio-h">Biography</h2>
-    <div class="bio__card" data-agent-target data-agent-label="profile">
-      <p class="bio__card-head" data-agent-point><span class="pill__dot" aria-hidden="true"></span>whoami</p>
+    <div class="bio__card">
+      <p class="bio__card-head"><span class="bio__dot" aria-hidden="true"></span>Profile</p>
       <dl>
-        <div><dt>based</dt><dd>Chennai, India</dd></div>
-        <div><dt>role</dt><dd>Co-founder, PM & lead AI dev, Genrecai</dd></div>
-        <div><dt>study</dt><dd>B.Tech CSBS, V.S.B. Engineering, 2027</dd></div>
-        <div><dt>builds</dt><dd>RAG, agents, MCP, full stack</dd></div>
-        <div><dt>reach</dt><dd><a class="link" href="mailto:shyamnathsankar.s@gmail.com">Email</a></dd></div>
+        <div><dt>Based</dt><dd>Chennai, India</dd></div>
+        <div><dt>Role</dt><dd>Co-founder, PM & lead AI dev, Genrecai</dd></div>
+        <div><dt>Study</dt><dd>B.Tech CSBS, V.S.B. Engineering, 2027</dd></div>
+        <div><dt>Builds</dt><dd>RAG, agents, MCP, full stack</dd></div>
+        <div><dt>Contact</dt><dd><a class="link" href="mailto:shyamnathsankar.s@gmail.com">Email</a></dd></div>
       </dl>
     </div>
     <div class="bio__text">
@@ -27,23 +27,23 @@ import { facts, timeline, skills } from '../data/site';
     </div>
   </section>
 
-  <section class="why" aria-labelledby="why-h" data-chapter-block="paper">
-    <ol class="why__log" aria-label="How I work, as a run" data-agent-target data-agent-label="how I work">
-      <li><code>plan()</code><span>Scope it until it can ship this month.</span></li>
-      <li><code>build()</code><span>Retrieval, agents, the screens around them.</span></li>
-      <li><code>show_steps()</code><span>Every query, tool call and write is visible.</span></li>
-      <li><code>stop()</code><span>A person can always take the wheel.</span></li>
+  <section class="why" aria-labelledby="why-h" data-chapter-block="paper" data-signal="1">
+    <ol class="why__log" aria-label="How I work">
+      <li><span class="why__no">01</span><span>Find the one question the product must answer.</span></li>
+      <li><span class="why__no">02</span><span>Build the retrieval, the agents and the screens around it.</span></li>
+      <li><span class="why__no">03</span><span>Show every step, so people can check the answer.</span></li>
+      <li><span class="why__no">04</span><span>Ship small, then keep going until someone depends on it.</span></li>
     </ol>
     <div class="why__text">
-      <h2 class="why__h" id="why-h" data-split="lines">Why this site runs like an agent</h2>
-      <p data-reveal="up">I build agents that work in the open. SelectStar shows every SQL statement before it runs. HailBrowser draws a border around the tab it is driving and puts a Stop button next to it. Trust comes from seeing the steps.</p>
-      <p data-reveal="up">So this portfolio works the same way: your scroll is the agent’s progress, each project is a step, and the Stop button in the corner pauses every moving thing on the page.</p>
+      <h2 class="why__h" id="why-h" data-split="lines">From noise to signal</h2>
+      <p data-reveal="up">Most of what I build starts as noise: a stack of PDFs, a spreadsheet nobody trusts, a database only one person can query, a web that agents can’t read. The work is turning that into a clear answer, fast enough that people use it every day.</p>
+      <p data-reveal="up">The lines behind this site show the same idea. They wander in the open sections and straighten into parallel signal wherever the work is.</p>
     </div>
   </section>
 
-  <section class="now" aria-labelledby="now-h">
+  <section class="now" aria-labelledby="now-h" data-signal="0.5">
     <h2 class="now__h" id="now-h" data-split="lines">Now and next</h2>
-    <ol class="now__list" data-agent-target data-agent-label="now and next">
+    <ol class="now__list">
       {timeline.map((t) => (
         <li class="now__row" data-reveal="up">
           <span class="now__when">{t.when}</span>
@@ -56,7 +56,7 @@ import { facts, timeline, skills } from '../data/site';
 
   <section class="skills" aria-labelledby="skills-h">
     <h2 class="skills__h" id="skills-h" data-split="lines">What I work with</h2>
-    <div class="skills__grid" data-agent-target data-agent-label="tools">
+    <div class="skills__grid">
       {skills.map((s) => (
         <div class="skills__col" data-reveal="up">
           <h3>{s.group}</h3>

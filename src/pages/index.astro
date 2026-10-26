@@ -1,20 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
-import RunPanel from '../components/RunPanel.astro';
+import HeroIndex from '../components/HeroIndex.astro';
 import ProjectKnot from '../components/ProjectKnot.astro';
 import Threads from '../components/Threads.astro';
 import { site, projects, facts } from '../data/site';
 ---
 <Base loader>
-  <section class="hero" aria-labelledby="hero-h">
+  <section class="hero" aria-labelledby="hero-h" data-signal="0">
     <h1 class="hero__name" id="hero-h">
-      <span class="hero__first" data-split="chars" data-intro>{site.first}</span>
-      <span class="hero__last" data-split="chars" data-intro data-delay="0.08">{site.last}</span>
+      <span class="hero__first rise">{site.first}</span>
+      <span class="hero__last rise" style="--d: 0.08s">{site.last}</span>
     </h1>
-    <div class="hero__stage" data-reveal="up" data-intro data-delay="0.25">
-      <RunPanel />
+    <div class="hero__stage rise" style="--d: 0.3s">
+      <HeroIndex />
     </div>
-    <p class="hero__lede" data-split="lines" data-intro data-delay="0.2">
+    <p class="hero__lede rise" style="--d: 0.2s">
       I build AI products end to end: retrieval systems, agents and the interfaces people use every day.
     </p>
     <p class="hero__meta" data-reveal="fade" data-intro data-delay="0.5">
@@ -32,21 +32,21 @@ import { site, projects, facts } from '../data/site';
     <div class="marquee__track" data-track aria-hidden="true"><div class="marquee__row"><span>RAG pipelines</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Agent graphs</span><span class="marquee__sep" aria-hidden="true">✳</span><span>MCP servers</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Browser agents</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Vector search</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Flutter apps</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Next.js</span><span class="marquee__sep" aria-hidden="true">✳</span><span>FastAPI</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Product strategy</span><span class="marquee__sep" aria-hidden="true">✳</span></div><div class="marquee__row"><span>RAG pipelines</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Agent graphs</span><span class="marquee__sep" aria-hidden="true">✳</span><span>MCP servers</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Browser agents</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Vector search</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Flutter apps</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Next.js</span><span class="marquee__sep" aria-hidden="true">✳</span><span>FastAPI</span><span class="marquee__sep" aria-hidden="true">✳</span><span>Product strategy</span><span class="marquee__sep" aria-hidden="true">✳</span></div></div>
   </div>
 
-  <section class="statement" aria-labelledby="statement-h" data-chapter-block="paper">
+  <section class="statement" aria-labelledby="statement-h" data-chapter-block="paper" data-signal="0.35">
     <h2 class="sr-only" id="statement-h">About</h2>
     <p class="statement__big" data-split="lines">
       Most AI demos stop at the demo. I keep going until someone depends on it: a student revising the night before an exam, a college reading its own feedback, a developer handing a browser to an agent.
     </p>
     <div class="statement__side">
-      <p data-reveal="up">I’m Shyamnath, a Computer Science & Business Systems student and co-founder of Genrecai, where I lead product and AI engineering. I like agents that work in the open, so this page runs like one: scroll, and it carries out the task on the right.</p>
+      <p data-reveal="up">I’m Shyamnath, a Computer Science & Business Systems student and co-founder of Genrecai, where I lead product and AI engineering. Most of my work is turning messy inputs (PDFs, spreadsheets, open web pages, raw databases) into answers people can trust.</p>
       <a class="link statement__more" href="/about/">More about me</a>
     </div>
   </section>
 
-  <section class="work" id="work" aria-labelledby="work-h">
+  <section class="work" id="work" aria-labelledby="work-h" data-signal="1">
     <div class="work__head">
       <h2 class="work__h" id="work-h" data-split="lines">Projects</h2>
-      <p class="work__count">Five steps, 2025 to now</p>
+      <p class="work__count">Five products, 2025 to now</p>
     </div>
     {projects.map((p, i) => <ProjectKnot project={p} index={i} />)}
     <a class="btn btn--ghost work__all" href="/work/" data-fill>
@@ -58,7 +58,7 @@ import { site, projects, facts } from '../data/site';
 
   <Threads />
 
-  <section class="facts" aria-labelledby="facts-h" data-chapter-block="paper">
+  <section class="facts" aria-labelledby="facts-h" data-chapter-block="paper" data-signal="0.6">
     <h2 class="facts__h" id="facts-h" data-split="lines">The record so far</h2>
     <dl class="facts__list">
       {facts.map((f) => (
