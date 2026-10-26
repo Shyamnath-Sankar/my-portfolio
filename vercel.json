@@ -1,1 +1,18 @@
-{"headers":[{"source":"/(.*)\\.(css|js|png|jpg|jpeg|webp|svg|woff2)","headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}]},{"source":"/(.*)\\.html","headers":[{"key":"Cache-Control","value":"public, max-age=0, must-revalidate"}]}]}
+{
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/projects.html", "destination": "/work/", "permanent": true },
+    { "source": "/lumina.html", "destination": "/work/luminaiq/", "permanent": true },
+    { "source": "/anyllm.html", "destination": "/work/anyllm/", "permanent": true },
+    { "source": "/eduecho.html", "destination": "/work/eduecho/", "permanent": true },
+    { "source": "/selectstar.html", "destination": "/work/selectstar/", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/_astro/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}

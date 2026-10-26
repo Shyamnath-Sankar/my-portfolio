@@ -1,0 +1,71 @@
+/* Tokens from DESIGN.md (v2, "The run"): black floor, white ink, mint = done, orange = the agent. */
+@font-face {
+  font-family: 'Anek';
+  src: url('/fonts/anek-100_800-normal.woff2') format('woff2');
+  font-weight: 100 800;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Mono';
+  src: url('/fonts/mono-400_600-normal.woff2') format('woff2');
+  font-weight: 400 600;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Host';
+  src: url('/fonts/host-400_700-normal.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --black: #0c0d0c;
+  --panel: #151716;
+  --white: #f3f4f1;
+  --grey: #a3a8a4;
+  --grey-paper: #575c58;
+  --mint: #8ff0c8;
+  --mint-deep: #0f6b48;
+  --orange: #ff6b2c;
+
+  /* Role tokens (the engine reads these). The paper chapter swaps them on <html>. */
+  --c-bg: var(--black);
+  --c-fg: var(--white);
+  --c-muted: var(--grey);
+  --c-line: rgb(243 244 241 / 0.14);
+  --c-accent: var(--mint);
+  --c-done: var(--mint);
+  --c-curtain: var(--black);
+
+  --f-display: 'Anek', 'Arial Narrow', system-ui, sans-serif;
+  --f-body: 'Host', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --t-mega: clamp(4.2rem, 0.6rem + 15.4vw, 17.5rem);
+  --t-xl: clamp(2.6rem, 1.2rem + 5.4vw, 7rem);
+  --t-l: clamp(1.75rem, 1.2rem + 2.2vw, 3.4rem);
+  --t-m: clamp(1.25rem, 1.1rem + 0.6vw, 1.7rem);
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.78rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --radius: 12px;
+  --pill: 999px;
+
+  --ease-trace: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

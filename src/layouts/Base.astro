@@ -1,0 +1,108 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+import Loader from '../components/Loader.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  chapter?: 'dark' | 'paper';
+  jsonLd?: Record<string, unknown>;
+  loader?: boolean;
+}
+const { title, description = site.description, image = '/og.png', chapter = 'dark', jsonLd, loader = false } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.role}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  homeLocation: { '@type': 'Place', name: 'Chennai, India' },
+  worksFor: { '@type': 'Organization', name: 'Genrecai' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'V.S.B. Engineering College' },
+  sameAs: site.socials.map((s) => s.href),
+  knowsAbout: ['Retrieval-augmented generation', 'Multi-agent systems', 'Model Context Protocol', 'Full-stack development', 'Product management'],
+};
+---
+<!doctype html>
+<html lang="en" transition:animate="none" data-chapter={chapter}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0c0d0c" />
+    <meta name="author" content={site.name} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}: AI product builder, Chennai`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <link rel="preload" href="/fonts/anek-100_800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/host-400_700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/mono-400_600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try { if (sessionStorage.getItem('agent-stopped') === '1') document.documentElement.classList.add('is-stopped'); } catch (e) {}
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true">
+      <div class="curtain__panel">
+        <p class="curtain__call"><span class="curtain__fn">navigate</span>(<span data-curtain-path></span>)</p>
+        <span class="curtain__label" data-curtain-label></span>
+        <span class="curtain__bar"><span data-curtain-bar></span></span>
+      </div>
+    </div>
+    <div id="agent" transition:persist="agent" aria-hidden="true">
+      <svg class="agent__cursor" viewBox="0 0 24 24"><path d="M4 2.5 20 11l-7.2 1.8L9.5 20Z" /></svg>
+      <span class="agent__tag">agent</span>
+    </div>
+    <div class="pill" transition:persist="pill" data-pill>
+      <span class="pill__dot" aria-hidden="true"></span>
+      <span class="pill__text" data-pill-text>Ready</span>
+      <button class="pill__stop" type="button" aria-pressed="false" data-stop>Stop</button>
+    </div>
+    {loader && <Loader />}
+    {loader && <script is:inline>if (matchMedia('(max-width: 767px), (pointer: coarse)').matches) document.getElementById('loader')?.remove();</script>}
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

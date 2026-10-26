@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shyamnathsankar.genrecai.com/sitemap-index.xml

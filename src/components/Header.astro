@@ -1,0 +1,33 @@
+---
+import { site } from '../data/site';
+const path = Astro.url.pathname;
+const nav = [
+  { label: 'Work', href: '/work/', match: (p: string) => p.startsWith('/work') },
+  { label: 'About', href: '/about/', match: (p: string) => p.startsWith('/about') },
+];
+---
+<header class="frame">
+  <a class="frame__name" href="/" aria-label={`${site.name}, home`}>
+    <svg class="frame__mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/><path d="M12 1.5 22.5 12 12 22.5 1.5 12Z"/></svg>
+    <span>{site.name}</span>
+  </a>
+  <nav class="frame__nav" aria-label="Main">
+    <ul>
+      {nav.map((n) => (
+        <li><a class="draw" href={n.href} aria-current={n.match(path) ? 'page' : undefined}>{n.label}</a></li>
+      ))}
+      <li><a class="draw" href={`mailto:${site.email}`}>Email</a></li>
+    </ul>
+  </nav>
+  <button class="frame__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
+    <span class="frame__menu-open">Menu</span><span class="frame__menu-close">Close</span>
+  </button>
+</header>
+<nav id="menu" class="menu" aria-label="Menu" hidden data-menu>
+  <ul>
+    <li><a href="/" aria-current={path === '/' ? 'page' : undefined}><span>Index</span></a></li>
+    {nav.map((n) => <li><a href={n.href} aria-current={n.match(path) ? 'page' : undefined}><span>{n.label}</span></a></li>)}
+    <li><a href={`mailto:${site.email}`}><span>Email</span></a></li>
+  </ul>
+  <p class="menu__foot">{site.city}, {site.coords}</p>
+</nav>

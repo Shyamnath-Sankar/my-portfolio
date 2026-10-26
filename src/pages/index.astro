@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import RunPanel from '../components/RunPanel.astro';
+import ProjectKnot from '../components/ProjectKnot.astro';
+import Threads from '../components/Threads.astro';
+import { site, projects, facts } from '../data/site';
+---
+<Base loader>
+  <section class="hero" aria-labelledby="hero-h">
+    <h1 class="hero__name" id="hero-h">
+      <span class="hero__first" data-split="chars" data-intro>{site.first}</span>
+      <span class="hero__last" data-split="chars" data-intro data-delay="0.08">{site.last}</span>
+    </h1>
+    <div class="hero__stage" data-reveal="up" data-intro data-delay="0.25">
+      <RunPanel />
+    </div>
+    <p class="hero__lede" data-split="lines" data-intro data-delay="0.2">
+      I build AI products end to end: retrieval systems, agents and the interfaces people use every day.
+    </p>
+    <p class="hero__meta" data-reveal="fade" data-intro data-delay="0.5">
+      <span>Co-founder, Genrecai</span>
+      <span>{site.city}, India</span>
+    </p>
+    <a class="hero__down" href="#work" data-reveal="fade" data-intro data-delay="0.6">
+      <span class="roll"><span>Selected work</span><span aria-hidden="true">Selected work</span></span>
+      <span class="arrow arrow--down" aria-hidden="true">↓</span>
+    </a>
+  </section>
+
+  <section class="statement" aria-labelledby="statement-h" data-chapter-block="paper">
+    <h2 class="sr-only" id="statement-h">About</h2>
+    <p class="statement__big" data-split="lines">
+      Most AI demos stop at the demo. I keep going until someone depends on it: a student revising the night before an exam, a college reading its own feedback, a developer handing a browser to an agent.
+    </p>
+    <div class="statement__side">
+      <p data-reveal="up">I’m Shyamnath, a Computer Science & Business Systems student and co-founder of Genrecai, where I lead product and AI engineering. I like agents that work in the open, so this page runs like one: scroll, and it carries out the task on the right.</p>
+      <a class="link statement__more" href="/about/">More about me</a>
+    </div>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-h">
+    <div class="work__head">
+      <h2 class="work__h" id="work-h" data-split="lines">Selected work</h2>
+      <p class="work__count">Five steps, 2025 to now</p>
+    </div>
+    {projects.map((p, i) => <ProjectKnot project={p} index={i} />)}
+    <a class="btn btn--ghost work__all" href="/work/" data-fill>
+      <span class="btn__fill" aria-hidden="true"></span>
+      <span class="btn__label">All work</span>
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <Threads />
+
+  <section class="facts" aria-labelledby="facts-h" data-chapter-block="paper">
+    <h2 class="facts__h" id="facts-h" data-split="lines">The record so far</h2>
+    <dl class="facts__list">
+      {facts.map((f) => (
+        <div class="fact" data-reveal="up">
+          <dt>{f.label}</dt>
+          <dd>{f.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</Base>

@@ -1,0 +1,26 @@
+---
+// Smaller work, as an index of past runs.
+import { threads } from '../data/site';
+interface Props { heading?: string; level?: 'h2' | 'h3' }
+const { heading = 'Other runs', level: H = 'h2' } = Astro.props;
+---
+<section class="threads" aria-labelledby="threads-h">
+  <div class="threads__head">
+    <H class="threads__h" id="threads-h" data-split="lines">{heading}</H>
+    <p class="threads__intro">Smaller tools and experiments, all open on GitHub. Some became products; one was retired so SelectStar could exist.</p>
+  </div>
+  <ul class="threads__list">
+    {threads.map((t) => (
+      <li class="thread-row">
+        <a href={t.href} target="_blank" rel="noopener" data-stretch>
+          <span class="thread-row__title">{t.title}</span>
+          <span class="sr-only"> (opens GitHub in a new tab)</span>
+        </a>
+        <span class="thread-row__kind">{t.kind}</span>
+        <span class="thread-row__stack">{t.stack}</span>
+        <span class="thread-row__year">{t.year}</span>
+        <span class="thread-row__arrow" aria-hidden="true">↗</span>
+      </li>
+    ))}
+  </ul>
+</section>

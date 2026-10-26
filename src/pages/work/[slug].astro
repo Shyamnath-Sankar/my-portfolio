@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Poster from '../../components/Poster.astro';
+import { projects, site, type Project } from '../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((p, i) => ({ params: { slug: p.slug }, props: { project: p, next: projects[(i + 1) % projects.length], index: i } }));
+}
+interface Props { project: Project; next: Project; index: number }
+const { project: p, next, index } = Astro.props;
+const no = String(index + 1).padStart(2, '0');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: p.title,
+  headline: `${p.title}: ${p.line}`,
+  description: p.summary,
+  dateCreated: String(p.year),
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  url: new URL(`/work/${p.slug}/`, site.url).href,
+  keywords: p.stack.join(', '),
+};
+---
+<Base title={`${p.title}, ${p.kind}`} description={`${p.summary} A case study by ${site.name}: the problem, the system and the outcome.`} jsonLd={jsonLd}>
+  <article class="case" data-case={p.slug} data-pill-page={`Reading ${p.title}`}>
+    <header class="case__hero">
+      <p class="case__kicker" data-reveal="fade" data-intro><span>{no}</span><span>{p.kind}</span><span>{p.year}</span></p>
+      <p class="case__status" data-reveal="fade" data-intro data-delay="0.4" aria-hidden="true" data-agent-park><span class="pill__dot"></span>step {no} of {projects.length}, done</p>
+      <h1 class="case__title" data-split="chars" data-intro>{p.title}</h1>
+      <p class="case__line" data-split="lines" data-intro data-delay="0.15">{p.line}</p>
+      <dl class="case__meta" data-reveal="up" data-intro data-delay="0.3">
+        <div><dt>Role</dt><dd>{p.role}</dd></div>
+        <div><dt>Year</dt><dd>{p.year}</dd></div>
+        <div><dt>Stack</dt><dd>{p.stack.join(', ')}</dd></div>
+        {p.links.length > 0 && (
+          <div><dt>Links</dt><dd><ul class="case__links">{p.links.map((l) => <li><a class="link" href={l.href} target="_blank" rel="noopener">{l.label}<span class="sr-only"> (opens in a new tab)</span></a></li>)}</ul></dd></div>
+        )}
+      </dl>
+    </header>
+
+    <figure class="case__cover" data-reveal="clip" data-intro data-delay="0.35" data-agent-target data-agent-label="the product">
+      {p.cover ? (
+        <>
+          <Image src={p.cover.src} alt={p.cover.alt} widths={[640, 1100, 1600, 2000]} sizes="92vw" loading="eager" fetchpriority="high" class="case__cover-img" />
+          <figcaption>{p.cover.caption}</figcaption>
+        </>
+      ) : (
+        <Poster project={p} size="hero" />
+      )}
+    </figure>
+
+    <section class="case__brief" aria-labelledby="brief-h">
+      <p class="case__label">The brief</p>
+      <div>
+        <h2 class="case__h" id="brief-h" data-split="lines">{p.brief.heading}</h2>
+        <p class="case__text" data-reveal="up">{p.brief.text}</p>
+      </div>
+    </section>
+
+    <section class="system" aria-labelledby="system-h" data-system data-chapter-block="paper">
+      <div class="system__stage">
+        <p class="case__label" id="system-h">The system</p>
+        <svg class="system__graph" viewBox="0 0 300 120" role="img" aria-label={`The system as three connected steps: ${p.steps.map((s) => s.name).join(', ')}`}>
+          <path class="system__edge" d="M40 60 H150 H260" pathLength="1" />
+          <path class="system__edge-done" d="M40 60 H150 H260" pathLength="1" data-graph-line />
+          {p.steps.map((st, i) => (
+            <g class="system__node" data-graph-node={i} transform={`translate(${40 + i * 110} 60)`}>
+              <circle r="15" />
+              <text y="44" text-anchor="middle">{st.name}</text>
+            </g>
+          ))}
+        </svg>
+      </div>
+      <ol class="system__steps">
+        {p.steps.map((s, i) => (
+          <li class="system__step" data-step={i} data-agent-target data-agent-label={`step ${i + 1}, ${s.name}`}>
+            <span class="system__no" data-agent-point>{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="system__name">{s.name}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="case__build" aria-labelledby="build-h">
+      <p class="case__label">The build</p>
+      <div>
+        <h2 class="case__h" id="build-h" data-split="lines">{p.build.heading}</h2>
+        <p class="case__text" data-reveal="up">{p.build.text}</p>
+        <ul class="case__points">{p.build.points.map((pt) => <li data-reveal="up">{pt}</li>)}</ul>
+      </div>
+    </section>
+
+    {p.media.length > 0 && (
+      <section class:list={['case__media', `case__media--${p.media[0].kind}`]} aria-label="Screens">
+        {p.media.map((m) => (
+          <figure class="case__frame" data-reveal="clip">
+            <Image src={m.src} alt={m.alt} widths={m.kind === 'tall' ? [400, 800] : [700, 1200, 1600]} sizes={m.kind === 'tall' ? '(max-width: 767px) 80vw, 30vw' : '(max-width: 767px) 92vw, 80vw'} loading="lazy" decoding="async" />
+            <figcaption>{m.caption}</figcaption>
+          </figure>
+        ))}
+      </section>
+    )}
+
+    <section class="outcome" aria-labelledby="outcome-h" data-agent-target data-agent-label="the outcome">
+      <p class="case__label" data-agent-point>The outcome</p>
+      <h2 class="outcome__value" id="outcome-h" data-split="chars">{p.outcome.value}<span class="sr-only">: {p.outcome.label}</span></h2>
+      <p class="outcome__label" aria-hidden="true">{p.outcome.label}</p>
+      <p class="case__text outcome__text" data-reveal="up">{p.outcome.text}</p>
+    </section>
+
+    <nav class="next" aria-label="Next case study" data-agent-target data-agent-label={`next, ${next.title}`}>
+      <a href={`/work/${next.slug}/`} class="next__link" data-stretch>
+        <span class="next__label" data-agent-point>Next case study <span class="arrow" aria-hidden="true">→</span></span>
+        <span class="next__title">{next.title}</span>
+      </a>
+      <code class="next__call" aria-hidden="true">open(“/work/{next.slug}/”)</code>
+      <span class="next__line">{next.line}</span>
+    </nav>
+  </article>
+</Base>

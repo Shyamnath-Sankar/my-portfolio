@@ -1,0 +1,26 @@
+---
+// The run: the visitor's task, executed down the page. Each project is a step.
+import { projects } from '../data/site';
+---
+<aside class="run" aria-label="The run: five projects as steps" data-run>
+  <div class="run__head">
+    <span class="run__label">Task</span>
+    <span class="run__state" data-run-state>Queued</span>
+  </div>
+  <p class="run__task">Show me what Shyamnath builds</p>
+  <div class="run__progress">
+    <span class="run__count"><span data-run-count>0</span> of {projects.length} steps</span>
+    <span class="run__bar" aria-hidden="true"><span data-run-bar></span></span>
+  </div>
+  <ol class="run__steps">
+    {projects.map((p, i) => (
+      <li class="run__step" data-run-step={i} data-agent-park={i === 0 ? true : undefined}>
+        <a href={`/work/${p.slug}/`}>
+          <span class="run__tick" aria-hidden="true"></span>
+          <span class="run__title">{p.title}</span>
+          <span class="run__kind">{p.kind}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</aside>

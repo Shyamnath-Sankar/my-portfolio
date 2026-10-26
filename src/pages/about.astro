@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import { facts, timeline, skills } from '../data/site';
+---
+<Base title="About" description="Shyamnath Sankar is a co-founder of Genrecai and a Computer Science & Business Systems student in Chennai who builds AI products from idea to daily use.">
+  <section class="page-hero" aria-labelledby="about-title" data-pill-page="Reading about">
+    <p class="page-hero__kicker" data-reveal="fade" data-intro data-agent-park>About</p>
+    <h1 class="page-hero__title page-hero__title--long" id="about-title" data-split="words" data-intro>From the first messy idea to the day someone depends on it.</h1>
+  </section>
+
+  <section class="bio" aria-labelledby="bio-h">
+    <h2 class="sr-only" id="bio-h">Biography</h2>
+    <div class="bio__card" data-agent-target data-agent-label="profile">
+      <p class="bio__card-head" data-agent-point><span class="pill__dot" aria-hidden="true"></span>whoami</p>
+      <dl>
+        <div><dt>based</dt><dd>Chennai, India</dd></div>
+        <div><dt>role</dt><dd>Co-founder, PM & lead AI dev, Genrecai</dd></div>
+        <div><dt>study</dt><dd>B.Tech CSBS, V.S.B. Engineering, 2027</dd></div>
+        <div><dt>builds</dt><dd>RAG, agents, MCP, full stack</dd></div>
+        <div><dt>reach</dt><dd><a class="link" href="mailto:shyamnathsankar.s@gmail.com">Email</a></dd></div>
+      </dl>
+    </div>
+    <div class="bio__text">
+      <p class="bio__lead" data-split="lines">I’m Shyamnath Sankar. I study Computer Science & Business Systems at V.S.B. Engineering College and co-founded Genrecai, where I’m the product manager and lead AI developer.</p>
+      <p data-reveal="up">My work sits on both sides of the product. On one side, the engineering: retrieval pipelines that answer from the source, agent graphs that know when to stop, MCP servers that let coding agents use a real browser. On the other, the decisions: what to build first, what to leave out, and how a screen should feel to someone who has never heard the word embedding.</p>
+      <p data-reveal="up">LuminaIQ was picked among the top 150 global startups at StartupGrind 2026. AnyLLM earned its first revenue within a month on Google Play. EduEcho runs feedback for my whole college. I also ship open-source tools like HailBrowser and SelectStar.</p>
+    </div>
+  </section>
+
+  <section class="why" aria-labelledby="why-h" data-chapter-block="paper">
+    <ol class="why__log" aria-label="How I work, as a run" data-agent-target data-agent-label="how I work">
+      <li><code>plan()</code><span>Scope it until it can ship this month.</span></li>
+      <li><code>build()</code><span>Retrieval, agents, the screens around them.</span></li>
+      <li><code>show_steps()</code><span>Every query, tool call and write is visible.</span></li>
+      <li><code>stop()</code><span>A person can always take the wheel.</span></li>
+    </ol>
+    <div class="why__text">
+      <h2 class="why__h" id="why-h" data-split="lines">Why this site runs like an agent</h2>
+      <p data-reveal="up">I build agents that work in the open. SelectStar shows every SQL statement before it runs. HailBrowser draws a border around the tab it is driving and puts a Stop button next to it. Trust comes from seeing the steps.</p>
+      <p data-reveal="up">So this portfolio works the same way: your scroll is the agent’s progress, each project is a step, and the Stop button in the corner pauses every moving thing on the page.</p>
+    </div>
+  </section>
+
+  <section class="now" aria-labelledby="now-h">
+    <h2 class="now__h" id="now-h" data-split="lines">Now and next</h2>
+    <ol class="now__list" data-agent-target data-agent-label="now and next">
+      {timeline.map((t) => (
+        <li class="now__row" data-reveal="up">
+          <span class="now__when">{t.when}</span>
+          <span class="now__what">{t.what}</span>
+          <span class="now__where">{t.where}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="skills" aria-labelledby="skills-h">
+    <h2 class="skills__h" id="skills-h" data-split="lines">What I work with</h2>
+    <div class="skills__grid" data-agent-target data-agent-label="tools">
+      {skills.map((s) => (
+        <div class="skills__col" data-reveal="up">
+          <h3>{s.group}</h3>
+          <ul>{s.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="facts facts--about" aria-labelledby="facts-h">
+    <h2 class="facts__h" id="facts-h" data-split="lines">The record so far</h2>
+    <dl class="facts__list">
+      {facts.map((f) => (
+        <div class="fact" data-reveal="up"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+      ))}
+    </dl>
+  </section>
+</Base>

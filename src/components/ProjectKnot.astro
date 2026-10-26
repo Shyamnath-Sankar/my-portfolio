@@ -1,0 +1,35 @@
+---
+// One project = one step of the run: the step lane (tool calls), the text, the media.
+import { Image } from 'astro:assets';
+import Poster from './Poster.astro';
+import type { Project } from '../data/site';
+interface Props { project: Project; index: number; headingLevel?: 'h2' | 'h3' }
+const { project: p, index, headingLevel: H = 'h3' } = Astro.props;
+const no = String(index + 1).padStart(2, '0');
+const side = index % 2 === 0 ? 'left' : 'right';
+const target = p.links[0] ? new URL(p.links[0].href).host + new URL(p.links[0].href).pathname.replace(/\/$/, '') : `${p.slug}`;
+---
+<article class:list={['knot', `knot--${side}`]} data-knot={index} data-agent-target>
+  <div class="knot__lane" aria-hidden="true">
+    <span class="knot__step">step {no}</span>
+    <code class="knot__call">open(<span>“{target}”</span>)</code>
+    <code class="knot__call">read_page()</code>
+    <code class="knot__done"><span class="knot__tick"></span>done</code>
+  </div>
+  <div class="knot__text">
+    <p class="knot__no"><span class="sr-only">Project </span>{no}</p>
+    <H class="knot__title"><a class="knot__link" href={`/work/${p.slug}/`} data-stretch>{p.title}</a></H>
+    <p class="knot__line">{p.line}</p>
+    <p class="knot__summary">{p.summary}</p>
+    <p class="knot__meta">{p.kind}, {p.year}</p>
+    <span class="knot__open" aria-hidden="true">Read the case study <span class="arrow">→</span></span>
+  </div>
+  <div class="knot__media" data-reveal="clip" data-agent-point>
+    {p.cover ? (
+      <Image src={p.cover.src} alt={p.cover.alt} widths={[560, 900, 1400]} sizes="(max-width: 767px) 92vw, 54vw" class="knot__img" loading="lazy" decoding="async" />
+    ) : (
+      <Poster project={p} />
+    )}
+    <span class="knot__frame" aria-hidden="true"></span>
+  </div>
+</article>

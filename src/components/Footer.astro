@@ -1,0 +1,36 @@
+---
+import { site } from '../data/site';
+const year = 2026;
+---
+<footer class="foot">
+  <div class="foot__top">
+    <p class="foot__ask">Got a task for a real person? Hand it over.</p>
+    <a class="btn foot__cta" href={`mailto:${site.email}`} data-fill>
+      <span class="btn__fill" aria-hidden="true"></span>
+      <span class="btn__label">Email me</span>
+      <span class="btn__arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+  <div class="foot__name" aria-hidden="true">
+    <span>{site.first}</span>
+    <svg class="foot__cursor" viewBox="0 0 24 24"><path d="M4 2.5 20 11l-7.2 1.8L9.5 20Z" /></svg>
+  </div>
+  <div class="foot__grid">
+    <div>
+      <h2 class="foot__h">Contact</h2>
+      <a class="foot__mail link" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+    <div>
+      <h2 class="foot__h">Elsewhere</h2>
+      <ul class="foot__list">
+        {site.socials.map((s) => <li><a class="util" href={s.href} rel="me noopener" target="_blank">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>)}
+      </ul>
+    </div>
+    <div class="foot__colophon">
+      <h2 class="foot__h">Colophon</h2>
+      <p>This site runs like the agents I build: one task, every step shown, and a Stop button that pauses all motion. The cursor is borrowed from HailBrowser.</p>
+      <p>Set in Anek by Ek Type, Host Grotesk and JetBrains Mono. Built with Astro, GSAP and Lenis.</p>
+    </div>
+  </div>
+  <p class="foot__base"><span>© {year} {site.name}</span><span>{site.city}, {site.coords}</span></p>
+</footer>
