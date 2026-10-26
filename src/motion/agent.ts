@@ -121,6 +121,7 @@ export function startAgent() {
     try { sessionStorage.setItem('agent-stopped', now ? '1' : '0'); } catch { /* private mode */ }
     syncStop();
     syncRun();
+    document.dispatchEvent(new CustomEvent('agent:stop'));
   });
 
   onPage(({ path }) => {

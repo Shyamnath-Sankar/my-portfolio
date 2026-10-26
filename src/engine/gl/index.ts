@@ -186,8 +186,27 @@ export function hideGL(duration = 0.6) {
   return gsap.to(items.map((i) => i.program.uniforms.uReveal), { value: 0, duration, ease: 'expo.in' });
 }
 
+// Adaptive quality: if frames run slow (weak GPU, software GL), lower the canvas resolution.
+let dpr = 0, frames = 0, last = 0, slow = 0;
+function adapt(t: number) {
+  if (!renderer) return;
+  if (!dpr) dpr = renderer.dpr;
+  const dt = last ? t - last : 0.016;
+  last = t;
+  if (++frames < 20) return;
+  slow = slow * 0.9 + (dt > 0.024 ? 1 : 0) * 0.1;
+  if (slow > 0.5 && dpr > 0.5) {
+    dpr = Math.max(0.5, dpr * 0.75);
+    renderer.dpr = dpr;
+    resize();
+    slow = 0;
+    frames = 0;
+  }
+}
+
 function render(t: number) {
   if (!renderer || document.hidden) return;
+  adapt(t);
   time = t;
   const target = Math.max(-40, Math.min(40, scrollState().velocity));
   velocity += (target - velocity) * 0.12;

@@ -51,6 +51,22 @@ export function setupMotion() {
   startField();
   startAgent();
 
+  // ---- Velocity marquee: speeds up and reverses with scroll; Stop pauses it.
+  onPage(() => {
+    const track = document.querySelector<HTMLElement>('[data-marquee] [data-track]');
+    if (!track || prefersReducedMotion()) return;
+    const loop = gsap.to(track, { xPercent: -50, ease: 'none', duration: 32, repeat: -1 });
+    const sync = () => (document.documentElement.classList.contains('is-stopped') ? loop.pause() : loop.resume());
+    sync();
+    const off = onScroll(({ velocity }) => {
+      if (document.documentElement.classList.contains('is-stopped')) return;
+      const dir = velocity < 0 ? -1 : 1;
+      gsap.to(loop, { timeScale: dir * (1 + Math.min(Math.abs(velocity) / 10, 4)), duration: 0.5, overwrite: true });
+    });
+    document.addEventListener('agent:stop', sync);
+    return () => { off(); document.removeEventListener('agent:stop', sync); };
+  });
+
   // ---- Chapters: the floor turns to paper while a paper block holds the middle of the screen.
   onPage(() => {
     const html = document.documentElement;

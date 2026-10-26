@@ -78,7 +78,7 @@ html:not(.motion) .btn:focus-visible .btn__fill, html:not(.motion) .btn:hover .b
 
 /* Stretched link: the whole card is the target, the link stays the accessible name. */
 [data-stretch]::after { content: ''; position: absolute; inset: 0; z-index: 2; }
-[data-hover-trace] { position: relative; }
+.knot, .thread-row, .next, .run__step { position: relative; }
 
 /* ---------- Agent: cursor and status pill ---------- */
 #agent {
@@ -167,7 +167,7 @@ html.frame-solid .frame { background: var(--c-bg); box-shadow: 0 1px 0 var(--c-l
 
 /* ---------- Curtain ---------- */
 .curtain__panel { display: grid; align-content: center; justify-items: start; gap: 1rem; padding: var(--gutter); background: var(--black); color: var(--white); }
-.curtain__call { font: 400 var(--t-s)/1.4 var(--f-mono); color: var(--grey); }
+.curtain__call { display: block; font: 400 var(--t-s)/1.4 var(--f-mono); color: var(--grey); }
 .curtain__fn { color: var(--orange); }
 .curtain__label { font-family: var(--f-display); font-size: var(--t-xl); line-height: 0.9; letter-spacing: -0.035em; font-weight: 600; }
 .curtain__bar { width: min(28rem, 70vw); height: 2px; background: rgb(243 244 241 / 0.14); overflow: hidden; }
@@ -226,6 +226,13 @@ html.motion:not(.is-stopped) .run__step.is-running .run__tick { animation: spin 
   .hero__down { grid-column: 8 / -1; grid-row: 3; }
   .hero { padding-bottom: calc(var(--u) * 12); }
 }
+
+/* ---------- Marquee ---------- */
+.marquee { overflow: clip; border-block: 1px solid var(--c-line); padding-block: calc(var(--u) * 1.6); }
+.marquee__track { display: flex; width: max-content; }
+.marquee__row { display: flex; align-items: center; gap: clamp(1.2rem, 3vw, 3rem); padding-right: clamp(1.2rem, 3vw, 3rem); font-family: var(--f-display); font-size: clamp(2.2rem, 1rem + 5vw, 6rem); line-height: 1; letter-spacing: -0.03em; font-weight: 600; font-stretch: 92%; white-space: nowrap; }
+.marquee__row span:nth-child(4n+3) { color: transparent; -webkit-text-stroke: 1px var(--c-fg); }
+.marquee__sep { color: var(--orange); font-size: 0.5em; }
 
 /* ---------- Statement ---------- */
 .statement { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: calc(var(--u) * 22) var(--gutter) calc(var(--u) * 18); }
@@ -378,7 +385,7 @@ html.gl-on .poster::before { content: ''; position: absolute; inset: 0; backgrou
 .bio__card dl { display: grid; gap: 0.55rem; }
 .bio__card dl > div { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0.6rem; }
 .bio__card dt { color: var(--mint); }
-.bio__card .link { color: var(--white); }
+.bio__card .link { color: var(--white); display: inline-block; padding-block: 0.3em; }
 .bio__text { grid-column: 6 / span 7; display: grid; gap: 1.4rem; max-width: 62ch; color: var(--c-muted); }
 .bio__lead { font-family: var(--f-display); font-size: var(--t-l); line-height: 1.1; letter-spacing: -0.02em; color: var(--c-fg); font-weight: 450; }
 .why { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: calc(var(--u) * 16) var(--gutter); align-items: center; }
